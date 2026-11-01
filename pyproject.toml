@@ -8,9 +8,14 @@ authors = [
 ]
 requires-python = ">=3.11"
 dependencies = [
+    "beautifulsoup4>=4.15.0",
     "fastapi>=0.162.0",
+    "langchain-text-splitters>=1.1.3",
     "pydantic>=2.14.2",
     "pydantic-settings>=2.16.2",
+    "pypdf>=6.21.4",
+    "python-docx>=1.2.0",
+    "tiktoken>=0.14.0",
     "uvicorn[standard]>=0.54.0",
 ]
 
@@ -38,3 +43,8 @@ plugins = ["pydantic.mypy"]
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
+
+[[tool.mypy.overrides]]
+module = ["tiktoken.*", "docx.*", "bs4.*", "pypdf.*", "langchain_text_splitters.*"]
+ignore_missing_imports = true
+follow_imports = "skip"
