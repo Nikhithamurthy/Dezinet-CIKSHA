@@ -24,5 +24,5 @@ uv run pytest
 
 ## Progress
 - [x] Task 01: Project setup, typing, linting, tests
-- [ ] Task 02: Async FastAPI + SSE streaming
+- [x] Task 02: Async FastAPI + SSE streaming
 - [ ] Tasks 03-15: in progress
