@@ -27,4 +27,5 @@ uv run pytest
 - [x] Task 02: Async FastAPI + SSE streaming
 - [x] Task 03: Ingestion pipeline + chunking benchmark
 - [x] Task 04: Embeddings, similarity metrics, Redis cache
-- [ ] Tasks 05-15: in progress
+- [x] Task 05: pgvector schema, HNSW/IVFFlat, tenant filtering
+- [ ] Tasks 06-15: in progress
