@@ -26,4 +26,5 @@ uv run pytest
 - [x] Task 01: Project setup, typing, linting, tests
 - [x] Task 02: Async FastAPI + SSE streaming
 - [x] Task 03: Ingestion pipeline + chunking benchmark
-- [ ] Tasks 04-15: in progress
+- [x] Task 04: Embeddings, similarity metrics, Redis cache
+- [ ] Tasks 05-15: in progress
