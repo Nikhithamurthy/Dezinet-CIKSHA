@@ -1,39 +1,41 @@
-# pgvector Report
+# pgvector Benchmark
 
-pgvector 0.8.7 on PostgreSQL 16 (Docker). 10,000 synthetic clustered vectors, 1536 dimensions, cosine distance, 50 queries, Recall@10 against exact brute force.
+pgvector 0.8.7 on PostgreSQL 16 (Docker). 10,000 synthetic clustered vectors, 1536 dimensions, 50 queries, cosine distance, top 10.
 
 ## 1. Index comparison
 | Setting | Avg latency (ms) | QPS | Recall@10 |
 |---|---|---|---|
-| exact scan (no ANN index) | 65.2 | 15 | 100% |
-| HNSW ef_search=10 | 47.8 | 21 | 96% |
-| HNSW ef_search=40 | 46.5 | 21 | 100% |
-| HNSW ef_search=100 | 45.8 | 22 | 100% |
-| IVFFlat probes=1 | 45.8 | 22 | 98% |
-| IVFFlat probes=5 | 48.5 | 21 | 100% |
-| IVFFlat probes=20 | 56.7 | 18 | 100% |
+| exact scan (no ANN index) | 59.2 | 17 | 100% |
+| HNSW ef_search=10 | 47.5 | 21 | 92% |
+| HNSW ef_search=40 | 48.0 | 21 | 98% |
+| HNSW ef_search=100 | 46.6 | 21 | 100% |
+| IVFFlat probes=1 | 47.7 | 21 | 91% |
+| IVFFlat probes=5 | 50.5 | 20 | 100% |
+| IVFFlat probes=20 | 57.1 | 18 | 100% |
 
-## 2. Tenant filtering (HNSW ef_search=40, LIMIT 10)
-| Mode | Tenant (share) | Avg rows returned | Avg latency (ms) |
+## 2. Metadata filtering (HNSW, ef_search=40, LIMIT 10)
+| Mode | Tenant (share of rows) | Avg rows returned (of 10) | Avg latency (ms) |
 |---|---|---|---|
-| post-filter (HNSW only) | tiny (1%) | 10.0 | 70.0 |
-| post-filter (HNSW only) | acme (~25%) | 8.8 | 49.3 |
-| iterative scan | tiny (1%) | 10.0 | 68.8 |
-| iterative scan | acme (~25%) | 10.0 | 49.6 |
-| B-tree on tenant_id | tiny (1%) | 10.0 | 69.0 |
-| B-tree on tenant_id | acme (~25%) | 10.0 | 404.2 |
+| post-filter (HNSW only) | tiny (1%) | 10.0 | 70.1 |
+| post-filter (HNSW only) | acme (~25%) | 8.7 | 49.2 |
+| iterative scan | tiny (1%) | 10.0 | 68.5 |
+| iterative scan | acme (~25%) | 10.0 | 50.9 |
+| B-tree on tenant_id | tiny (1%) | 10.0 | 70.8 |
+| B-tree on tenant_id | acme (~25%) | 10.0 | 406.2 |
 
 ## 3. Build cost
 | Index | Build time (s) | Index size (MB) |
 |---|---|---|
-| HNSW (m=16, ef_construction=64) | 7.8 | 82 |
-| IVFFlat (lists=50) | 1.4 | 82 |
+| HNSW (m=16, ef_construction=64) | 7.6 | 82 |
+| IVFFlat (lists=50) | 1.2 | 82 |
 
 ## Findings
-- HNSW recall rose from 96% to 100% as ef_search went from 10 to 40, with no visible latency cost at this size. IVFFlat recall rose from 98% to 100% between probes=1 and probes=5, and latency grew from 45.8 ms to 56.7 ms at probes=20.
-- HNSW took 7.8 s to build against 1.4 s for IVFFlat. Both indexes were 82 MB, about 1.3x the 61 MB of raw vectors, below the 1.5x to 2x rule of thumb (9.2 to 12.3 GB for 1M vectors).
-- Post-filtering returned 8.8 of 10 rows for the 25% tenant, showing the failure from naive post-filtering. Iterative scan restored 10 rows at the same latency. The B-tree also returned 10 rows but took 404 ms for that tenant.
-- For the 1% tenant the planner chose a sequential scan, so the HNSW failure did not appear there. The 10 rows came from an exact scan.
+- Recall rises with the search effort setting for both indexes: HNSW 92% to 100% (ef_search 10 to 100), IVFFlat 91% to 100% (probes 1 to 5).
+- Latency barely changed (about 47 ms) and the exact scan was only 59 ms. At 10,000 rows the time is dominated by client and Docker overhead, so this run does not show an HNSW speed advantage. Only the recall differences are reliable.
+- HNSW took 7.6 s to build against 1.2 s for IVFFlat.
+- Post-filtering returned only 8.7 of 10 rows for the 25% tenant, which shows the failure in interview question 4. Iterative scan and a B-tree both restored 10 rows, but the B-tree raised latency from about 50 ms to 406 ms.
+- For the 1% tenant, PostgreSQL chose a sequential scan with the filter applied first, so it returned 10 rows and the failure did not appear.
+- RAM sizing for 1M x 1536 float32 vectors is 6.14 GB raw, or 9.2 to 12.3 GB with HNSW at 1.5x to 2x (a calculation, not measured).
 
 ## Limits
-Synthetic data, only 10,000 rows, a single run with no repeats, latency dominated by per-query overhead at this scale, and the acme query plans were not inspected. Row-Level Security and ChromaDB are not covered.
+Synthetic data, only 10,000 rows, no Row-Level Security yet, and ChromaDB is not covered.
