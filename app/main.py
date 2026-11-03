@@ -10,7 +10,7 @@ from pydantic import BaseModel
 from app.config import APP_VERSION, get_settings
 from app.db import DatabasePool
 from app.errors import register_exception_handlers
-from app.routers import ai
+from app.routers import ai, observability
 
 
 @asynccontextmanager
@@ -33,6 +33,7 @@ app.add_middleware(
 )
 register_exception_handlers(app)
 app.include_router(ai.router)
+app.include_router(observability.router)
 
 
 class Health(BaseModel):
