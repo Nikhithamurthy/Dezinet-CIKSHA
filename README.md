@@ -29,4 +29,5 @@ uv run pytest
 - [x] Task 04: Embeddings, similarity metrics, Redis cache
 - [x] Task 05: pgvector schema, HNSW/IVFFlat, tenant filtering
 - [x] Task 06: Hybrid search (BM25 + dense + RRF) and reranking
-- [ ] Tasks 07-15: in progress
+- [x] Task 07: Enterprise RAG (query transforms, grounded prompts, citations, fallback)
+- [ ] Tasks 08-15: in progress
