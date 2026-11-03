@@ -1,0 +1,50 @@
+{"question": "What is the price of the Starter plan?", "ground_truth": "The price of the Starter plan is $12 per month.", "source": "Starter plan"}
+{"question": "What is the price of the Growth plan?", "ground_truth": "The price of the Growth plan is $29 per month.", "source": "Growth plan"}
+{"question": "What is the price of the Business plan?", "ground_truth": "The price of the Business plan is $79 per month.", "source": "Business plan"}
+{"question": "What is the price of the Enterprise plan?", "ground_truth": "The price of the Enterprise plan is $199 per month.", "source": "Enterprise plan"}
+{"question": "What is the price of the Education plan?", "ground_truth": "The price of the Education plan is $9 per month.", "source": "Education plan"}
+{"question": "What is the price of the Nonprofit plan?", "ground_truth": "The price of the Nonprofit plan is $0 per month.", "source": "Nonprofit plan"}
+{"question": "What is the price of the Developer plan?", "ground_truth": "The price of the Developer plan is $19 per month.", "source": "Developer plan"}
+{"question": "What is the price of the Startup plan?", "ground_truth": "The price of the Startup plan is $39 per month.", "source": "Startup plan"}
+{"question": "What is the price of the Partner plan?", "ground_truth": "The price of the Partner plan is $59 per month.", "source": "Partner plan"}
+{"question": "What is the price of the Premium plan?", "ground_truth": "The price of the Premium plan is $99 per month.", "source": "Premium plan"}
+{"question": "What is the seat limit of the Starter plan?", "ground_truth": "The seat limit of the Starter plan is 5 seats.", "source": "Starter plan"}
+{"question": "What is the seat limit of the Growth plan?", "ground_truth": "The seat limit of the Growth plan is 25 seats.", "source": "Growth plan"}
+{"question": "What is the seat limit of the Business plan?", "ground_truth": "The seat limit of the Business plan is 100 seats.", "source": "Business plan"}
+{"question": "What is the seat limit of the Enterprise plan?", "ground_truth": "The seat limit of the Enterprise plan is 500 seats.", "source": "Enterprise plan"}
+{"question": "What is the seat limit of the Education plan?", "ground_truth": "The seat limit of the Education plan is 50 seats.", "source": "Education plan"}
+{"question": "What is the seat limit of the Nonprofit plan?", "ground_truth": "The seat limit of the Nonprofit plan is 20 seats.", "source": "Nonprofit plan"}
+{"question": "What is the seat limit of the Developer plan?", "ground_truth": "The seat limit of the Developer plan is 3 seats.", "source": "Developer plan"}
+{"question": "What is the seat limit of the Startup plan?", "ground_truth": "The seat limit of the Startup plan is 15 seats.", "source": "Startup plan"}
+{"question": "What is the seat limit of the Partner plan?", "ground_truth": "The seat limit of the Partner plan is 10 seats.", "source": "Partner plan"}
+{"question": "What is the seat limit of the Premium plan?", "ground_truth": "The seat limit of the Premium plan is 250 seats.", "source": "Premium plan"}
+{"question": "What is the storage quota of the Starter plan?", "ground_truth": "The storage quota of the Starter plan is 10 GB.", "source": "Starter plan"}
+{"question": "What is the storage quota of the Growth plan?", "ground_truth": "The storage quota of the Growth plan is 100 GB.", "source": "Growth plan"}
+{"question": "What is the storage quota of the Business plan?", "ground_truth": "The storage quota of the Business plan is 500 GB.", "source": "Business plan"}
+{"question": "What is the storage quota of the Enterprise plan?", "ground_truth": "The storage quota of the Enterprise plan is 2000 GB.", "source": "Enterprise plan"}
+{"question": "What is the storage quota of the Education plan?", "ground_truth": "The storage quota of the Education plan is 250 GB.", "source": "Education plan"}
+{"question": "What is the storage quota of the Nonprofit plan?", "ground_truth": "The storage quota of the Nonprofit plan is 150 GB.", "source": "Nonprofit plan"}
+{"question": "What is the storage quota of the Developer plan?", "ground_truth": "The storage quota of the Developer plan is 50 GB.", "source": "Developer plan"}
+{"question": "What is the storage quota of the Startup plan?", "ground_truth": "The storage quota of the Startup plan is 75 GB.", "source": "Startup plan"}
+{"question": "What is the storage quota of the Partner plan?", "ground_truth": "The storage quota of the Partner plan is 300 GB.", "source": "Partner plan"}
+{"question": "What is the storage quota of the Premium plan?", "ground_truth": "The storage quota of the Premium plan is 1000 GB.", "source": "Premium plan"}
+{"question": "What is the support channel of the Starter plan?", "ground_truth": "The support channel of the Starter plan is email.", "source": "Starter plan"}
+{"question": "What is the support channel of the Growth plan?", "ground_truth": "The support channel of the Growth plan is live chat.", "source": "Growth plan"}
+{"question": "What is the support channel of the Business plan?", "ground_truth": "The support channel of the Business plan is phone.", "source": "Business plan"}
+{"question": "What is the support channel of the Enterprise plan?", "ground_truth": "The support channel of the Enterprise plan is a dedicated manager.", "source": "Enterprise plan"}
+{"question": "What is the support channel of the Education plan?", "ground_truth": "The support channel of the Education plan is a community forum.", "source": "Education plan"}
+{"question": "What is the support channel of the Nonprofit plan?", "ground_truth": "The support channel of the Nonprofit plan is a ticket portal.", "source": "Nonprofit plan"}
+{"question": "What is the support channel of the Developer plan?", "ground_truth": "The support channel of the Developer plan is Slack.", "source": "Developer plan"}
+{"question": "What is the support channel of the Startup plan?", "ground_truth": "The support channel of the Startup plan is video calls.", "source": "Startup plan"}
+{"question": "What is the support channel of the Partner plan?", "ground_truth": "The support channel of the Partner plan is WhatsApp.", "source": "Partner plan"}
+{"question": "What is the support channel of the Premium plan?", "ground_truth": "The support channel of the Premium plan is postal mail.", "source": "Premium plan"}
+{"question": "What is the refund window of the Starter plan?", "ground_truth": "The refund window of the Starter plan is 14 days.", "source": "Starter plan"}
+{"question": "What is the refund window of the Growth plan?", "ground_truth": "The refund window of the Growth plan is 30 days.", "source": "Growth plan"}
+{"question": "What is the refund window of the Business plan?", "ground_truth": "The refund window of the Business plan is 45 days.", "source": "Business plan"}
+{"question": "What is the refund window of the Enterprise plan?", "ground_truth": "The refund window of the Enterprise plan is 60 days.", "source": "Enterprise plan"}
+{"question": "What is the refund window of the Education plan?", "ground_truth": "The refund window of the Education plan is 7 days.", "source": "Education plan"}
+{"question": "What is the refund window of the Nonprofit plan?", "ground_truth": "The refund window of the Nonprofit plan is 21 days.", "source": "Nonprofit plan"}
+{"question": "What is the refund window of the Developer plan?", "ground_truth": "The refund window of the Developer plan is 10 days.", "source": "Developer plan"}
+{"question": "What is the refund window of the Startup plan?", "ground_truth": "The refund window of the Startup plan is 15 days.", "source": "Startup plan"}
+{"question": "What is the refund window of the Partner plan?", "ground_truth": "The refund window of the Partner plan is 28 days.", "source": "Partner plan"}
+{"question": "What is the refund window of the Premium plan?", "ground_truth": "The refund window of the Premium plan is 90 days.", "source": "Premium plan"}

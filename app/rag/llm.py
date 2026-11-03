@@ -16,12 +16,9 @@ SYNONYMS = {
     "support": "help",
 }
 MOCK_MIN_SENTENCE_SUPPORT = 0.5
-_PRONOUNS = frozenset(
-    {
-        "it", "its", "this", "that", "they", "them",
-        "their", "he", "his", "she", "her", "those", "these",
-    }
-)  # fmt: skip
+PRONOUNS = {"it", "its", "they", "them", "their", "that", "this", "those", "these"}
+FILLER = {"tell", "about", "please", "explain", "describe"}
+SUMMARY_PREFIX = "Summary of earlier conversation:"
 
 
 class LLM(Protocol):
@@ -46,7 +43,7 @@ class MockLLM:
             return self._answer(user)
         if system.startswith("TASK: CONDENSE"):
             return self._condense(user)
-        if system.startswith("TASK: SUMMARIZE"):
+        if system.startswith("TASK: SUMMARI"):
             return self._summarize(user)
         raise ValueError("MockLLM does not understand this prompt")
 
@@ -74,26 +71,27 @@ class MockLLM:
         return f"{keywords}. This document explains {keywords}."
 
     def _condense(self, user: str) -> str:
-        """Follow-up -> standalone query: append the last user turn's keywords when the
-        question uses a pronoun or is too short to stand alone."""
+        """Mock rewrite: if the final question uses a pronoun, append the topic words
+        from the previous user turn (original capitalisation kept). A real LLM
+        does this properly."""
         questions = re.findall(r"^Question: (.*)$", user, re.MULTILINE)
         question = questions[-1] if questions else user
-        prior = re.findall(r"^user: (.*)$", user, re.MULTILINE)
-        if not prior:
+        user_turns = re.findall(r"^user: (.*)$", user, re.MULTILINE)
+        if not user_turns or not (set(tokenize(question)) & PRONOUNS):
             return question
-        words = {t.lower() for t in tokenize(question)}
-        if words & _PRONOUNS or len(self._keywords(question)) < 2:
-            return f"{question} {' '.join(self._keywords(prior[-1]))}".strip()
-        return question
+        words = re.findall(r"[A-Za-z0-9][\w.-]*", user_turns[-1])
+        topic = " ".join(w for w in words if w.lower() not in STOPWORDS | FILLER)
+        return f"{question} {topic}".strip()
 
     def _summarize(self, user: str) -> str:
-        """Extractive summary: the previous summary plus the start of each user message."""
-        previous = re.findall(r"^Previous summary: (.*)$", user, re.MULTILINE)
-        notes = [
-            line[len("user: ") :][:80] for line in user.splitlines() if line.startswith("user: ")
-        ]
-        head = [] if not previous or previous[0] == "none" else [previous[0]]
-        return " | ".join(head + notes)
+        """Mock summary: keep an earlier summary plus every user turn verbatim, so
+        early facts (like an error code) survive. A real LLM writes a proper
+        summary."""
+        previous = re.search(rf"{re.escape(SUMMARY_PREFIX)} (.*)", user)
+        turns = [t.strip() for t in re.findall(r"^user: (.*)$", user, re.MULTILINE)]
+        parts = [previous.group(1).strip()] if previous else []
+        parts += [t for t in turns if t]
+        return f"{SUMMARY_PREFIX} {' '.join(parts)}".strip()
 
     def _answer(self, user: str) -> str:
         chunks = parse_context(user)
