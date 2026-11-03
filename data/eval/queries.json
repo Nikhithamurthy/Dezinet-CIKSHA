@@ -1,0 +1,23 @@
+[
+{"category": "exact", "query": "ERR-5034", "relevant": ["d01"]},
+{"category": "exact", "query": "what does ERR-5035 mean", "relevant": ["d02"]},
+{"category": "exact", "query": "ERR-4012", "relevant": ["d03"]},
+{"category": "exact", "query": "ERR-4290", "relevant": ["d04"]},
+{"category": "exact", "query": "ERR-5101", "relevant": ["d05"]},
+{"category": "exact", "query": "DZ-TEAM-25", "relevant": ["d06"]},
+{"category": "exact", "query": "DZ-ENT-CUSTOM", "relevant": ["d08"]},
+{"category": "exact", "query": "clause 9.4", "relevant": ["d10"]},
+{"category": "exact", "query": "clause 7.2 liability", "relevant": ["d09"]},
+{"category": "keyword", "query": "how much does the Team plan cost", "relevant": ["d06"]},
+{"category": "keyword", "query": "how do I reset my password", "relevant": ["d12"]},
+{"category": "keyword", "query": "refund policy for annual plans", "relevant": ["d15"]},
+{"category": "keyword", "query": "when is customer support available", "relevant": ["d16"]},
+{"category": "keyword", "query": "how many days of paid leave", "relevant": ["d18"]},
+{"category": "keyword", "query": "enable two factor authentication", "relevant": ["d13"]},
+{"category": "keyword", "query": "do you support SAML single sign-on", "relevant": ["d25"]},
+{"category": "keyword", "query": "how do I export my data", "relevant": ["d27"]},
+{"category": "paraphrase", "query": "I forgot my login credentials", "relevant": ["d12"]},
+{"category": "paraphrase", "query": "who gets a discount for paying yearly", "relevant": ["d14"]},
+{"category": "paraphrase", "query": "can I get my money back", "relevant": ["d15"]},
+{"category": "paraphrase", "query": "how long until someone answers my ticket", "relevant": ["d17"]}
+]

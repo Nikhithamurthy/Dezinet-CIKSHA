@@ -28,4 +28,5 @@ uv run pytest
 - [x] Task 03: Ingestion pipeline + chunking benchmark
 - [x] Task 04: Embeddings, similarity metrics, Redis cache
 - [x] Task 05: pgvector schema, HNSW/IVFFlat, tenant filtering
-- [ ] Tasks 06-15: in progress
+- [x] Task 06: Hybrid search (BM25 + dense + RRF) and reranking
+- [ ] Tasks 07-15: in progress
