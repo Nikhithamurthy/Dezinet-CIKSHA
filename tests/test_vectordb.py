@@ -15,6 +15,7 @@ from app.vectordb.db import (
     ensure_tenant,
     get_dsn,
     init_schema,
+    keyword_search,
     search,
     vector_literal,
 )
@@ -145,3 +146,24 @@ def test_all_three_distance_operators() -> None:
     assert result["cosine"] == pytest.approx(0.0, abs=1e-4)
     assert result["l2"] == pytest.approx(0.0, abs=1e-3)
     assert result["inner_product"] == pytest.approx(-1.0, abs=1e-4)  # <#> is negative dot
+
+
+@needs_db
+def test_keyword_search_finds_exact_token_and_respects_tenant() -> None:
+    async def scenario() -> tuple[list[str], list[str]]:
+        conn = await connect()
+        try:
+            await init_schema(conn)
+            await _clean(conn, ["test_e", "test_f"])
+            await _seed(conn, "test_e", ["error ERR5034 on login", "refund policy for plans"])
+            await _seed(conn, "test_f", ["error ERR5034 in tenant f only"])
+            hits_e = [h["content"] for h in await keyword_search(conn, "test_e", "ERR5034")]
+            hits_f = [h["content"] for h in await keyword_search(conn, "test_f", "refund")]
+            return hits_e, hits_f
+        finally:
+            await _clean(conn, ["test_e", "test_f"])
+            await conn.close()
+
+    hits_e, hits_f = asyncio.run(scenario())
+    assert hits_e == ["error ERR5034 on login"]
+    assert hits_f == []

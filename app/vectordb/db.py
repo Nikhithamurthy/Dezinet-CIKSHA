@@ -34,10 +34,12 @@ CREATE TABLE IF NOT EXISTS chunks (
     chunk_index INT NOT NULL,
     content TEXT NOT NULL,
     metadata JSONB NOT NULL DEFAULT '{}'::jsonb,
-    embedding vector(1536) NOT NULL
+    embedding vector(1536) NOT NULL,
+    content_tsv tsvector GENERATED ALWAYS AS (to_tsvector('english', content)) STORED
 );
 
 CREATE INDEX IF NOT EXISTS chunks_tenant_idx ON chunks (tenant_id);
+CREATE INDEX IF NOT EXISTS chunks_content_fts ON chunks USING gin (content_tsv);
 CREATE INDEX IF NOT EXISTS chunks_metadata_gin ON chunks USING gin (metadata);
 CREATE INDEX IF NOT EXISTS chunks_embedding_hnsw ON chunks
     USING hnsw (embedding vector_cosine_ops) WITH (m = 16, ef_construction = 64);
@@ -144,6 +146,38 @@ async def search(
             "content": r["content"],
             "metadata": json.loads(r["metadata"]),
             "distance": float(r["distance"]),
+        }
+        for r in rows
+    ]
+
+
+async def keyword_search(
+    conn: Any,
+    tenant_id: str,
+    query: str,
+    k: int = 5,
+) -> list[dict[str, Any]]:
+    """Full-text keyword search, tenant-filtered. Uses websearch_to_tsquery so
+    user input such as ERR-5034 or quoted phrases cannot break the query."""
+    if not tenant_id:
+        raise ValueError("tenant_id is required")
+    if not 1 <= k <= 100:
+        raise ValueError("k must be between 1 and 100")
+    sql = (
+        "SELECT id, document_id, content, metadata, "
+        "ts_rank_cd(content_tsv, websearch_to_tsquery('english', $1)) AS score "
+        "FROM chunks "
+        "WHERE tenant_id = $2 AND content_tsv @@ websearch_to_tsquery('english', $1) "
+        "ORDER BY score DESC, id LIMIT $3"
+    )
+    rows = await conn.fetch(sql, query, tenant_id, k)
+    return [
+        {
+            "id": r["id"],
+            "document_id": r["document_id"],
+            "content": r["content"],
+            "metadata": json.loads(r["metadata"]),
+            "score": float(r["score"]),
         }
         for r in rows
     ]
